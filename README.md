@@ -66,4 +66,13 @@ Just an example, of a hybrid structure that incorporates both hats and governanc
 While we agreed in principle, things to be fleshed out: 
 - actual physical structure (above is just an example)
 - specifics about the hybrid interaction of governance votes and hats
+
+
+### 4. Whitepaper
+
+- We agreed that the first efforts in web3 should be to support the whitepaper
+  - The whitepaper will be a jumping off point for more concrete web3 development
+  - The whitepaper has value in itself for the purpose of communicating to investors
+ 
+  
   
