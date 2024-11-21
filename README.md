@@ -23,7 +23,11 @@ A proving/testing ground for web3 R&D.
 - can be burned on usage/actions in the ecosystem 
 - can be purchased or awarded 
 - can serve as seller stake
-- may or may not give governance votes 
+- may or may not give governance votes
+
+
+![image](https://github.com/user-attachments/assets/2cb833a3-a434-4034-9eb4-3a2150a5f4e7)
+
 
 
 ### 2. Web3 Issues 
@@ -53,6 +57,13 @@ A proving/testing ground for web3 R&D.
 - requires R&D 
 
 
-
-
 ### 3. Governance Structure 
+
+Just an example, of a hybrid structure that incorporates both hats and governance votes granted by token: 
+![image](https://github.com/user-attachments/assets/6748712c-5874-4155-a6e6-e3a2df6c9fbd)
+
+
+While we agreed in principle, things to be fleshed out: 
+- actual physical structure (above is just an example)
+- specifics about the hybrid interaction of governance votes and hats
+  
