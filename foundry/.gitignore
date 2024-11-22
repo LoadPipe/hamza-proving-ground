@@ -2,6 +2,8 @@
 cache/
 out/
 node_modules/
+typechain-types/
+coverage/
 lib/
 artifacts/
 #hardhat.config.ts
