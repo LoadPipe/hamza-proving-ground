@@ -1,12 +1,14 @@
+pragma circom 2.1.6;
+
 template MerkleTreeVerification(depth) {
-    signal input leaf; //product ID
+    signal input leaf; 
     signal input root;
-    signal input pathElements[depth]; //merke nodes for proof
-    signal input pathIndex[depth];    //position of the leaf (0 or 1 at each level)
+    signal input pathElements[depth]; 
+    signal input pathIndex[depth]; 
 
-    signal output isValid; //1 if the proof is valid, 0 otherwise
+    signal output isValid;
 
-    signal hash = leaf;
+    signal hash <== leaf;
 
     for (var i = 0; i < depth; i++) {
         signal left;
@@ -23,5 +25,7 @@ template MerkleTreeVerification(depth) {
         hash <== Poseidon([left, right]);
     }
 
-    isValid <== (hash === root);
+    isValid <== (hash == root);
 }
+
+component main = MerkleTreeVerification(3);
