@@ -28,5 +28,7 @@ abstract contract AccountIndex {
 
         idToAddress[id] = accountAddress;
         addressToId[accountAddress] = id;
+
+        emit AccountCreated(accountAddress);
     }
 }
