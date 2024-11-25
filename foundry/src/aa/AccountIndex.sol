@@ -8,6 +8,10 @@ abstract contract AccountIndex {
     mapping(address => bytes32) private addressToId;
     address bundler;
 
+    event AccountCreated (
+        address indexed accountAddress
+    );
+
     constructor(address _bundler) {
         bundler = _bundler;
     }
@@ -16,13 +20,13 @@ abstract contract AccountIndex {
         return addressToId[addr] != 0;
     }
 
-    function addAccount(bytes32 id, address userEoa) external {
+    function createAccount(bytes32 id, address userEoa) external {
         if (msg.sender != bundler) 
             revert("Unauthorized");
 
-        address paymentAddress = address(new SmartAccount(bundler, id, userEoa)); 
+        address accountAddress = address(new SmartAccount(bundler, id, userEoa)); 
 
-        idToAddress[id] = paymentAddress;
-        addressToId[paymentAddress] = id;
+        idToAddress[id] = accountAddress;
+        addressToId[accountAddress] = id;
     }
 }

@@ -18,7 +18,7 @@ contract SmartAccount {
         if (msg.sender != userEoa) {
             revert("Unauthorized");
         }
-
+        
         if (tokenAddress == address(0)) {
             IERC20 token = IERC20(tokenAddress); 
             token.transfer(userEoa, amount);
