@@ -73,9 +73,12 @@ export class AccountService {
             signer
         );
 
-        const id = ethers.keccak256(ethers.toUtf8String(username));
+        const id = ethers.keccak256(ethers.toUtf8Bytes(username));
         console.log('calling contract', id);
-        const accountAddress = await contract.createAccount(id);
+        const accountAddress = await contract.createAccount(
+            id,
+            ethers.ZeroAddress
+        );
 
         return {
             paymentAddress: paymentAddress,
