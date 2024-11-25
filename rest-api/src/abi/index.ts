@@ -1,4 +1,4 @@
-export const accountIndex = [
+export const accountIndexAbi = [
     {
         type: 'function',
         name: 'accountExists',
@@ -31,7 +31,7 @@ export const accountIndex = [
     },
 ];
 
-export const smartAccount = [
+export const smartAccountAbi = [
     {
         type: 'constructor',
         inputs: [

@@ -21,7 +21,7 @@ export class CoinGeckoService {
     private readonly ETH = '0x0000000000000000000000000000000000000000'; // Placeholder for native ETH
 
     constructor(private readonly httpService: HttpService) {
-        this.initCache();
+        //this.initCache();
     }
 
     private async initCache(): Promise<void> {
