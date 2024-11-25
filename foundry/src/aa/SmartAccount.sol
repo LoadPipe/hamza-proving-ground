@@ -27,4 +27,6 @@ contract SmartAccount {
             payable(userEoa).transfer(amount);
         }
     }
+
+    receive() external payable {}
 }
