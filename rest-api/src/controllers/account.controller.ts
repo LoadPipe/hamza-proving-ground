@@ -5,7 +5,7 @@ import {
     HttpException,
     HttpStatus,
 } from '@nestjs/common';
-import { AccountService } from './account.service';
+import { AccountService } from '../services/account.service';
 
 @Controller('account')
 export class AccountController {

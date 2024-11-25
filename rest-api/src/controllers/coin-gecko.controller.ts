@@ -5,7 +5,7 @@ import {
     HttpException,
     HttpStatus,
 } from '@nestjs/common';
-import { CoinGeckoService } from './coin-gecko.service';
+import { CoinGeckoService } from '../services/coin-gecko.service';
 
 @Controller('convert')
 export class CoinGeckoController {
