@@ -4,7 +4,8 @@ out/
 node_modules/
 typechain-types/
 coverage/
-lib/
+lib/*
+!/lib/ERC1155/
 artifacts/
 #hardhat.config.ts
 *.sh
@@ -19,3 +20,4 @@ docs/
 
 # Dotenv file
 .env
+.DS_Store

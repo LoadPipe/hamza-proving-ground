@@ -48,6 +48,7 @@ A proving/testing ground for web3 R&D.
 
 **Products**
 - requires R&D 
+- Mass Market?
 
 **Yield Generation**
 - requires R&D 
@@ -72,7 +73,7 @@ While we agreed in principle, things to be fleshed out:
 
 - We agreed that the first efforts in web3 should be to support the whitepaper
   - The whitepaper will be a jumping off point for more concrete web3 development
-  - The whitepaper has value in itself for the purpose of communicating to investors
+  - The whitepaper has value in itself for the purpose of communicating to investors and collaborators
  
   
   

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/utils/Context.sol"; 
-import "./ISecurityContext.sol"; 
+import "./Interfaces/ISecurityContext.sol"; 
 
 /**
  * @title ManagedSecurity 
