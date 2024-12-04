@@ -13,3 +13,6 @@
 [submodule "foundry/lib/solady"]
 	path = foundry/lib/solady
 	url = https://github.com/vectorized/solady
+[submodule "foundry/lib/hats-protocol"]
+	path = foundry/lib/hats-protocol
+	url = https://github.com/Hats-Protocol/hats-protocol
