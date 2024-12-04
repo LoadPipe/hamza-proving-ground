@@ -6,13 +6,13 @@ import "../src/Hats.sol";
 import "./HatsTestSetup.t.sol";
 import { LongStrings } from "./LongStrings.sol";
 
-contract DeployTest is TestSetup {
+contract DeployTest is HatsTestSetup {
     function testDeployWithParams() public {
         assertEq(hats.name(), name);
     }
 }
 
-contract CreateTopHatTest is TestSetup {
+contract CreateTopHatTest is HatsTestSetup {
     function setUp() public override {
         setUpVariables();
 
@@ -53,7 +53,7 @@ contract CreateTopHatTest is TestSetup {
     }
 }
 
-contract CreateHatsTest is TestSetup {
+contract CreateHatsTest is HatsTestSetup {
     function testImmutableHatCreated() public {
         // get prelim values
         (,,,,,, uint16 lastHatId,,) = hats.viewHat(topHatId);
@@ -408,7 +408,7 @@ contract ImageURITest is TestSetup2 {
     }
 }
 
-contract MintHatsTest is TestSetup {
+contract MintHatsTest is HatsTestSetup {
     function setUp() public override {
         super.setUp();
 
@@ -2396,7 +2396,7 @@ contract MalformedInputsTests is TestSetup2 {
     }
 }
 
-contract MulticallTests is TestSetup {
+contract MulticallTests is HatsTestSetup {
     bytes[] data;
     string topDeets;
     string secondDeets;

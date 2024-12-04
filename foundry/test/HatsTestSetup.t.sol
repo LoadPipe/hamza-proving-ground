@@ -60,7 +60,7 @@ abstract contract TestVariables is HatsEvents, HatsErrors {
     error InvalidChildHat();
 }
 
-abstract contract TestSetup is Test, TestVariables {
+abstract contract HatsTestSetup is Test, TestVariables {
     function setUp() public virtual {
         setUpVariables();
         // instantiate Hats contract
@@ -142,7 +142,7 @@ abstract contract TestSetup is Test, TestVariables {
 }
 
 // in addition to TestSetup, TestSetup2 creates and mints a second hat
-abstract contract TestSetup2 is TestSetup {
+abstract contract TestSetup2 is HatsTestSetup {
     function setUp() public virtual override {
         // expand on TestSetup
         super.setUp();
@@ -165,7 +165,7 @@ abstract contract TestSetup2 is TestSetup {
     }
 }
 
-abstract contract TestSetupMutable is TestSetup {
+abstract contract TestSetupMutable is HatsTestSetup {
     function setUp() public virtual override {
         // expand on TestSetup
         super.setUp();
@@ -184,7 +184,7 @@ abstract contract TestSetupMutable is TestSetup {
     }
 }
 
-abstract contract TestSetupBatch is TestSetup {
+abstract contract TestSetupBatch is HatsTestSetup {
     function setUp() public override {
         // expand on TestSetup
         super.setUp();
