@@ -7,7 +7,8 @@ remappings = [
   "forge-std/=lib/forge-std/src/",
   "solbase/=lib/solbase/src/",
   "solady/=lib/solady/src/",
-  "openzeppelin/=lib/openzeppelin-contracts/"
+  "openzeppelin/=lib/openzeppelin-contracts/",
+  "hats-protocol/=lib/hats-protocol/"
 ]
 
 [rpc_endpoints]

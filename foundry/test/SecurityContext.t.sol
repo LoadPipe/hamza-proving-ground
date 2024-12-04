@@ -20,7 +20,7 @@ contract SecurityContextTest is Test {
         nonAdmin2 = address(3);
         
         vm.prank(admin);
-        securityContext = new SecurityContext(admin);
+        securityContext = new SecurityContext(admin, address(1));
     }
 
     function grantRole(address secMan, bytes32 role, address toAddress, address caller) internal {

@@ -19,7 +19,7 @@ contract DeployEscrow is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         // 1. Deploy SecurityContext first (deployer as admin)
-        SecurityContext securityContext = new SecurityContext(deployer);
+        SecurityContext securityContext = new SecurityContext(deployer, address(1));
 
         // 2. Deploy SystemSettings with SecurityContext and initial values
         SystemSettings systemSettings = new SystemSettings(

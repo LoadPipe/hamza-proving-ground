@@ -3,3 +3,4 @@ forge-std/=lib/forge-std/src/
 solady/=lib/solady/src/
 solbase/=lib/solbase/src/
 openzeppelin/=lib/openzeppelin-contracts/
+hats-protocol/=lib/hats-protocol/

@@ -9,7 +9,4 @@ contract DeployTest is TestSetup {
         assertEq(admin, address(this));
         console.log("PaymentEscrow deployed at:", address(escrow));
     }
-
-    function testGrantRole() public {
-    }
 }

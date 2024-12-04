@@ -9,6 +9,7 @@ import "../src/Interfaces/ISystemSettings.sol";
 import "../src/Interfaces/ISecurityContext.sol";
 import "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {HatsTestSetup} from "./HatsTestSetup.t.sol";
 
 abstract contract TestVariables {
     PaymentEscrow escrow;
@@ -68,13 +69,13 @@ abstract contract TestVariables {
     );
 }
 
-abstract contract TestSetup is Test, TestVariables {
-    function setUp() public virtual {
+abstract contract TestSetup is Test, TestVariables, HatsTestSetup {
+    function setUp() public virtual  override {
         setUpVariables();
         setUpContracts();
     }
 
-    function setUpVariables() internal {
+    function setUpVariables() internal override {
         // Setup addresses
         admin = address(this);
         payer = address(1);
@@ -96,8 +97,11 @@ abstract contract TestSetup is Test, TestVariables {
     }
 
     function setUpContracts() internal {
+
+        // Call parent setup to deploy Hats contract
+        HatsTestSetup.setUp();
         // Deploy SecurityContext first (deployer as admin)
-        SecurityContext _securityContext = new SecurityContext(admin);
+        SecurityContext _securityContext = new SecurityContext(admin, address(hats));
         securityContext = ISecurityContext(address(_securityContext));
         console2.log("SecurityContext deployed at:", address(_securityContext));
 

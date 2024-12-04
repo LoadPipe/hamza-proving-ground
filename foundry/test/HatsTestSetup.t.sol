@@ -70,7 +70,7 @@ abstract contract HatsTestSetup is Test, TestVariables {
         createTopHat();
     }
 
-    function setUpVariables() internal {
+    function setUpVariables() internal virtual {
         // set variables: deploy
         _baseImageURI = "https://www.images.hats.work/";
 

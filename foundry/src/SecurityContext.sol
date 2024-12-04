@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.7;
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "./Interfaces/ISecurityContext.sol"; 
+import "openzeppelin/contracts/access/AccessControl.sol";
+import "./Interfaces/ISecurityContext.sol";
+import "hats-protocol/src/Interfaces/IHats.sol";
 
 /**
  * @title SecurityContext 
@@ -22,12 +23,14 @@ import "./Interfaces/ISecurityContext.sol";
  */
 contract SecurityContext is AccessControl, ISecurityContext {
     bytes32 public constant ADMIN_ROLE = 0x0;
+    IHats public immutable hatsContract;
     
     /**
      * Constructs the instance, granting the initial role(s). 
      */
-    constructor(address admin) {
+    constructor(address admin, address _hatsContract) {
         _grantRole(ADMIN_ROLE, admin);
+        hatsContract = IHats(_hatsContract);
     }
     
     /**
@@ -38,6 +41,16 @@ contract SecurityContext is AccessControl, ISecurityContext {
      */
     function hasRole(bytes32 role, address account) public view virtual override(AccessControl, ISecurityContext) returns (bool) {
         return super.hasRole(role, account);
+    }
+
+    /**
+     * Checks if an account is wearing a specific hat
+     * @param hatId The ID of the hat to check
+     * @param wearer The address to check
+     * @return bool True if the address is wearing the hat
+     */
+    function hasHat(uint256 hatId, address wearer) public view returns (bool) {
+        return hatsContract.isWearerOfHat(wearer, hatId);
     }
     
     /**
