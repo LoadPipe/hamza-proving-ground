@@ -9,9 +9,9 @@ import "../src/Interfaces/ISystemSettings.sol";
 import "../src/Interfaces/ISecurityContext.sol";
 import "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "openzeppelin/contracts/token/ERC20/ERC20.sol";
-import {HatsTestSetup} from "./HatsTestSetup.t.sol";
+import {TestSetup as HatsTestSetup} from "hats-protocol/test/HatsTestSetup.t.sol";
 
-abstract contract TestVariables {
+abstract contract EscrowTestVariables {
     PaymentEscrow escrow;
     ISecurityContext securityContext;
     ISystemSettings settings;
@@ -69,13 +69,15 @@ abstract contract TestVariables {
     );
 }
 
-abstract contract TestSetup is Test, TestVariables, HatsTestSetup {
-    function setUp() public virtual  override {
-        setUpVariables();
-        setUpContracts();
+abstract contract EscrowTestSetup is EscrowTestVariables, HatsTestSetup {
+    function setUp() public virtual override {
+        super.setUp();
+
+        setUpEscrowVariables();
+        setUpEscrowContracts();
     }
 
-    function setUpVariables() internal override {
+    function setUpEscrowVariables() internal {
         // Setup addresses
         admin = address(this);
         payer = address(1);
@@ -96,7 +98,7 @@ abstract contract TestSetup is Test, TestVariables, HatsTestSetup {
         vm.deal(arbiter, 1 ether);
     }
 
-    function setUpContracts() internal {
+    function setUpEscrowContracts() internal {
 
         // Call parent setup to deploy Hats contract
         HatsTestSetup.setUp();
