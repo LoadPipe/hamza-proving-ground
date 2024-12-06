@@ -73,14 +73,51 @@ abstract contract EscrowTestVariables {
 abstract contract EscrowTestSetup is EscrowTestVariables, HatsTestSetup {
     function setUp() public virtual override {
         super.setUp();
+
+        admin = address(this);
+
+        // Set up initial hat tree
+        bytes32 arbiterHatId = setUpHatTree();
+
+        // Add logging to verify hats setup
+        console2.log("Hats address:", address(hats));
+        console2.log("Test contract address:", address(this));
+
         setUpEscrowVariables();
-        setUpEscrowContracts();
+        setUpEscrowContracts(arbiterHatId);
     
+    }
+
+    function setUpHatTree() internal returns (bytes32) {
+        // Set up initial hat tree
+        // Mint top hat to admin
+        topHatId = hats.mintTopHat(admin, "tophat", "http://www.tophat.com/");
+        
+        // Verify the top hat was minted correctly
+        assertEq(hats.isWearerOfHat(admin, topHatId), true);
+
+        // Create arbiter hat as child of topHat
+        uint256 _arbiterHatId = hats.createHat(  // Rename to avoid shadowing
+            topHatId,
+            "Arbiter Hat", 
+            _maxSupply,
+            _eligibility,
+            _toggle,
+            true,
+            "arbiter.com"
+        );
+
+        // Mint arbiter hat to arbiter address
+        hats.mintHat(_arbiterHatId, arbiter);
+
+        // Verify arbiter is wearing their hat
+        assertTrue(hats.isWearerOfHat(arbiter, _arbiterHatId));
+
+        return bytes32(_arbiterHatId);
     }
 
     function setUpEscrowVariables() internal {
         // Setup addresses
-        admin = address(this);
         payerETH = address(1);
         payerToken = address(2);
         receiver = address(3);
@@ -101,10 +138,9 @@ abstract contract EscrowTestSetup is EscrowTestVariables, HatsTestSetup {
 
     }
 
-    function setUpEscrowContracts() internal {
+    function setUpEscrowContracts(bytes32 arbiterHatId) internal {
         // Deploy SecurityContext first (deployer as admin)
-        console2.log("Hats address:", address(hats));
-        SecurityContext _securityContext = new SecurityContext(admin, address(hats));
+        SecurityContext _securityContext = new SecurityContext(admin, address(hats), arbiterHatId);
         securityContext = ISecurityContext(address(_securityContext));
         console2.log("SecurityContext deployed at:", address(_securityContext));
 

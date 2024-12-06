@@ -10,15 +10,10 @@ $ forge install Hats-Protocol/hats-protocol --no-commit
 
 ```shell
 $ forge build
-$ anvil
 ```
 
 ```shell
-$ source .env
-```
-
-```shell
-$ forge test -vv
+$ forge test -vvvv
 ```
 
 

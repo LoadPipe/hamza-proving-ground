@@ -50,7 +50,6 @@ contract PaymentEscrow is HasSecurityContext
 {
     ISystemSettings private settings;
     mapping(bytes32 => Payment) private payments;
-    uint256 private ARBITER_HAT;
 
     //EVENTS 
 
@@ -172,19 +171,6 @@ contract PaymentEscrow is HasSecurityContext
         return payments[paymentId];
     }
 
-    //TODO: Add an event here? It's a Private Variable, so not sure about this.
-    /**
-    * Updates the ARBITER_HAT ID. Only callable by admin.
-    * 
-    * Reverts: 
-    * - {UnauthorizedAccess} if caller does not have ADMIN_ROLE
-    * 
-    * @param newHatId The new hat ID to set
-    */
-    function setArbiterHat(uint256 newHatId) external onlyRole(ADMIN_ROLE) {
-        ARBITER_HAT = newHatId;
-    }
-
     /**
      * Gives assent to release the escrow. Caller must be a party to the escrow (either payer, 
      * receiver, or arbiter).  
@@ -204,7 +190,7 @@ contract PaymentEscrow is HasSecurityContext
 
         if (msg.sender != payment.receiver && 
             msg.sender != payment.payer && 
-            !securityContext.hasHat(ARBITER_HAT, msg.sender))
+            !securityContext.hasRole(securityContext.ARBITER_HAT(), msg.sender))
         {
             revert("Unauthorized");
         }
@@ -222,7 +208,7 @@ contract PaymentEscrow is HasSecurityContext
                     emit ReleaseAssentGiven(paymentId, msg.sender, 2);
                 }
             }
-            if (securityContext.hasRole(ARBITER_ROLE, msg.sender)) {
+            if (securityContext.hasRole(securityContext.ARBITER_HAT(), msg.sender)) {
                 if (!payment.payerReleased) {
                     payment.payerReleased = true;
                     emit ReleaseAssentGiven(paymentId, msg.sender, 3);
@@ -239,7 +225,7 @@ contract PaymentEscrow is HasSecurityContext
         if (payment.amount > 0 && payment.amountRefunded <= payment.amount) {
 
             //who has permission to refund? either the receiver or the arbiter
-            if (payment.receiver != msg.sender && !securityContext.hasHat(ARBITER_HAT, msg.sender))
+            if (payment.receiver != msg.sender && !securityContext.hasRole(securityContext.ARBITER_HAT(), msg.sender))
                 revert("Unauthorized");
 
             uint256 activeAmount = payment.amount - payment.amountRefunded; 

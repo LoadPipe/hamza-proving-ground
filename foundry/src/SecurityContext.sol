@@ -23,14 +23,29 @@ import "hats-protocol/src/Interfaces/IHats.sol";
  */
 contract SecurityContext is AccessControl, ISecurityContext {
     bytes32 public constant ADMIN_ROLE = 0x0;
+    bytes32 public ARBITER_HAT;
     IHats public immutable hatsContract;
+
+    event ArbiterHatSet(bytes32 oldHat, bytes32 newHat);
     
     /**
      * Constructs the instance, granting the initial role(s). 
      */
-    constructor(address admin, address _hatsContract) {
+    constructor(address admin, address _hatsContract, bytes32 _arbiterHat) {
         _grantRole(ADMIN_ROLE, admin);
         hatsContract = IHats(_hatsContract);
+        ARBITER_HAT = _arbiterHat;
+        emit ArbiterHatSet(0, _arbiterHat);
+    }
+
+    /**
+     * Sets the Arbiter Hat ID. Only callable by admin.
+     * @param hatId The new hat ID to set
+     */
+    function setArbiterHat(uint256 hatId) external onlyRole(ADMIN_ROLE) {
+        bytes32 oldHat = ARBITER_HAT;
+        ARBITER_HAT = bytes32(hatId);
+        emit ArbiterHatSet(oldHat, ARBITER_HAT);
     }
     
     /**
@@ -40,17 +55,12 @@ contract SecurityContext is AccessControl, ISecurityContext {
      * @param account Does this account have the specified role?
      */
     function hasRole(bytes32 role, address account) public view virtual override(AccessControl, ISecurityContext) returns (bool) {
+        // If the role is ARBITER_HAT and it's not zero, check if the account wears that hat
+        if (role == ARBITER_HAT && role != 0) {
+            return hatsContract.isWearerOfHat(account, uint256(ARBITER_HAT));
+        }
+        
         return super.hasRole(role, account);
-    }
-
-    /**
-     * Checks if an account is wearing a specific hat
-     * @param hatId The ID of the hat to check
-     * @param wearer The address to check
-     * @return bool True if the address is wearing the hat
-     */
-    function hasHat(uint256 hatId, address wearer) public view returns (bool) {
-        return hatsContract.isWearerOfHat(wearer, hatId);
     }
     
     /**

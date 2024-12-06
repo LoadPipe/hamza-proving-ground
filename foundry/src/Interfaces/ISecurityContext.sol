@@ -14,6 +14,14 @@ pragma solidity ^0.8.7;
  * All rights reserved. Unauthorized use prohibited.
  */
 interface ISecurityContext  {
+
+    function ARBITER_HAT() external view returns (bytes32);
+
+    /**
+     * Sets the Arbiter Hat ID. Only callable by admin.
+     * @param hatId The new hat ID to set
+     */
+    function setArbiterHat(uint256 hatId) external;
     
     /**
      * Returns `true` if `account` has been granted `role`.
@@ -21,13 +29,6 @@ interface ISecurityContext  {
      * @param role The role to query. 
      * @param account Does this account have the specified role?
      */
-    function hasRole(bytes32 role, address account) external returns (bool);
+    function hasRole(bytes32 role, address account) view external returns (bool);
 
-    /**
-     * Checks if an account is wearing a specific hat
-     * @param hatId The ID of the hat to check
-     * @param wearer The address to check
-     * @return bool True if the address is wearing the hat
-     */
-    function hasHat(uint256 hatId, address wearer) external view returns (bool);
 }
