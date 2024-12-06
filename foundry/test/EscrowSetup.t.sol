@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import "forge-std/Test.sol";
+import {Test, console2} from "forge-std/Test.sol";
 import "../src/PaymentEscrow.sol";
 import "../src/SystemSettings.sol";
 import "../src/SecurityContext.sol";
@@ -18,7 +18,8 @@ abstract contract EscrowTestVariables {
 
     // Test addresses
     address internal admin;
-    address internal payer;
+    address internal payerETH;
+    address internal payerToken;
     address internal receiver;
     address internal arbiter;
     address internal unauthorized;
@@ -72,19 +73,20 @@ abstract contract EscrowTestVariables {
 abstract contract EscrowTestSetup is EscrowTestVariables, HatsTestSetup {
     function setUp() public virtual override {
         super.setUp();
-
         setUpEscrowVariables();
         setUpEscrowContracts();
+    
     }
 
     function setUpEscrowVariables() internal {
         // Setup addresses
         admin = address(this);
-        payer = address(1);
-        receiver = address(2);
-        arbiter = address(3);
+        payerETH = address(1);
+        payerToken = address(2);
+        receiver = address(3);
+        arbiter = address(4);
         unauthorized = address(99);
-        vaultAddress = address(4);
+        vaultAddress = address(5);
 
         // Setup payment values
         paymentAmount = 1 ether;
@@ -93,16 +95,15 @@ abstract contract EscrowTestSetup is EscrowTestVariables, HatsTestSetup {
         feeBps = 250; // 2.5%
 
         // Fund test addresses
-        vm.deal(payer, 100 ether);
+        vm.deal(payerETH, 100 ether);
         vm.deal(receiver, 1 ether);
         vm.deal(arbiter, 1 ether);
+
     }
 
     function setUpEscrowContracts() internal {
-
-        // Call parent setup to deploy Hats contract
-        HatsTestSetup.setUp();
         // Deploy SecurityContext first (deployer as admin)
+        console2.log("Hats address:", address(hats));
         SecurityContext _securityContext = new SecurityContext(admin, address(hats));
         securityContext = ISecurityContext(address(_securityContext));
         console2.log("SecurityContext deployed at:", address(_securityContext));
@@ -118,6 +119,9 @@ abstract contract EscrowTestSetup is EscrowTestVariables, HatsTestSetup {
 
         // Deploy mock ERC20 token for testing
         testToken = IERC20(deployMockERC20());
+        // Transfer half of the minted tokens to payerToken
+        uint256 transferAmount = 500_000 * 10**18; // Half of 1 million tokens
+        testToken.transfer(payerToken, transferAmount);
 
         // Deploy PaymentEscrow with SecurityContext and SystemSettings
         escrow = new PaymentEscrow(

@@ -18,7 +18,7 @@ $ source .env
 ```
 
 ```shell
-$ forge test
+$ forge test -vv
 ```
 
 

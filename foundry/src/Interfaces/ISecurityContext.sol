@@ -22,4 +22,12 @@ interface ISecurityContext  {
      * @param account Does this account have the specified role?
      */
     function hasRole(bytes32 role, address account) external returns (bool);
+
+    /**
+     * Checks if an account is wearing a specific hat
+     * @param hatId The ID of the hat to check
+     * @param wearer The address to check
+     * @return bool True if the address is wearing the hat
+     */
+    function hasHat(uint256 hatId, address wearer) external view returns (bool);
 }
