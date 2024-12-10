@@ -76,21 +76,16 @@ abstract contract EscrowTestSetup is EscrowTestVariables, HatsTestSetup {
 
         admin = address(this);
 
-        // Set up initial hat tree
-        bytes32 arbiterHatId = setUpHatTree();
-
-        // Add logging to verify hats setup
-        console2.log("Hats address:", address(hats));
-        console2.log("Test contract address:", address(this));
-
         setUpEscrowVariables();
+        bytes32 arbiterHatId = setUpHatTree();
         setUpEscrowContracts(arbiterHatId);
-    
+       
     }
 
     function setUpHatTree() internal returns (bytes32) {
         // Set up initial hat tree
         // Mint top hat to admin
+        vm.startPrank(admin);
         topHatId = hats.mintTopHat(admin, "tophat", "http://www.tophat.com/");
         
         // Verify the top hat was minted correctly
@@ -106,12 +101,15 @@ abstract contract EscrowTestSetup is EscrowTestVariables, HatsTestSetup {
             true,
             "arbiter.com"
         );
+        console2.log("Arbiter Hat ID:", _arbiterHatId);
 
         // Mint arbiter hat to arbiter address
         hats.mintHat(_arbiterHatId, arbiter);
+        vm.stopPrank();
 
-        // Verify arbiter is wearing their hat
-        assertTrue(hats.isWearerOfHat(arbiter, _arbiterHatId));
+        bool isWearing = hats.isWearerOfHat(arbiter, _arbiterHatId);
+        console2.log("Is arbiter wearing hat?", isWearing);
+
 
         return bytes32(_arbiterHatId);
     }

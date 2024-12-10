@@ -14,8 +14,6 @@ contract DeployTest is EscrowTestSetup {
     }
 
     function testTransferArbiterHat() public {
-        // Get initial arbiter hat ID from security context
-        uint256 arbiterHatId = uint256(securityContext.ARBITER_HAT());
         
         // Verify initial arbiter is wearing the hat
         assertTrue(hats.isWearerOfHat(arbiter, arbiterHatId));
