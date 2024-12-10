@@ -101,14 +101,10 @@ abstract contract EscrowTestSetup is EscrowTestVariables, HatsTestSetup {
             true,
             "arbiter.com"
         );
-        console2.log("Arbiter Hat ID:", _arbiterHatId);
 
         // Mint arbiter hat to arbiter address
         hats.mintHat(_arbiterHatId, arbiter);
         vm.stopPrank();
-
-        bool isWearing = hats.isWearerOfHat(arbiter, _arbiterHatId);
-        console2.log("Is arbiter wearing hat?", isWearing);
 
 
         return bytes32(_arbiterHatId);
@@ -140,7 +136,6 @@ abstract contract EscrowTestSetup is EscrowTestVariables, HatsTestSetup {
         // Deploy SecurityContext first (deployer as admin)
         SecurityContext _securityContext = new SecurityContext(admin, address(hats), arbiterHatId);
         securityContext = ISecurityContext(address(_securityContext));
-        console2.log("SecurityContext deployed at:", address(_securityContext));
 
         // Deploy SystemSettings with SecurityContext and initial values
         SystemSettings _settings = new SystemSettings(
@@ -149,7 +144,6 @@ abstract contract EscrowTestSetup is EscrowTestVariables, HatsTestSetup {
             feeBps
         );
         settings = ISystemSettings(address(_settings));
-        console2.log("SystemSettings deployed at:", address(_settings));
 
         // Deploy mock ERC20 token for testing
         testToken = IERC20(deployMockERC20());
@@ -162,7 +156,6 @@ abstract contract EscrowTestSetup is EscrowTestVariables, HatsTestSetup {
             securityContext,
             settings
         );
-        console2.log("PaymentEscrow deployed at:", address(escrow));
     }
 
     function deployMockERC20() internal returns (address) {
