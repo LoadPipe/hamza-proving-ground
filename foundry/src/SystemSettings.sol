@@ -17,6 +17,7 @@ contract SystemSettings is HasSecurityContext, ISystemSettings
 {
     address private _vaultAddress;
     uint256 private _feeBps;
+    
 
     //EVENTS 
     event VaultAddressChanged (
